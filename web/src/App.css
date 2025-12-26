@@ -1,42 +1,110 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Light palette for the app */
+:root {
+  --background: #f8fafc; /* slate-50 */
+  --foreground: #00873d; /* slate-900 */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #2563eb; /* blue-600 */
+  --primary-foreground: #ffffff;
+  --secondary: #e2e8f0; /* slate-200 */
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9; /* slate-100 */
+  --muted-foreground: #64748b; /* slate-500 */
+  --accent: #60a5fa; /* blue-400 */
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444; /* red-500 */
+  --border: #e5e7eb; /* slate-200 */
+  --input: #e5e7eb;
+  --ring: #93c5fd; /* blue-300 */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Light, subtle hero gradient (keeps existing class name) */
+.violet-gradient {
+  background: radial-gradient(
+      1000px 500px at 50% -40%,
+      #60a5fa33 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 70%, #ffffff 100%);
 }
 
-@keyframes logo-spin {
+/* Utility text color classes bound to the palette */
+.app-text-foreground {
+  color: var(--foreground);
+}
+.app-text-primary {
+  color: var(--primary);
+}
+.app-text-secondary {
+  color: var(--secondary-foreground);
+}
+.app-text-muted {
+  color: var(--muted-foreground);
+}
+.app-text-accent {
+  color: var(--accent);
+}
+.app-text-destructive {
+  color: var(--destructive);
+}
+
+/* Utility background classes bound to the palette */
+.app-bg-background {
+  background-color: var(--background);
+}
+.app-bg-primary {
+  background-color: var(--primary);
+}
+.app-bg-popover {
+  background-color: var(--popover);
+}
+
+/* Ensure global body uses the app palette */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+.app-bg-primary {
+  background-color: var(--primary);
+}
+.app-bg-foreground {
+  background-color: var(--foreground);
+}
+.app-bg-secondary {
+  background-color: var(--secondary);
+}
+.app-bg-card {
+  background-color: var(--card);
+}
+.app-border {
+  border-color: var(--border);
+}
+
+/* Animations: overlay fade-in and panel slide-in */
+@keyframes overlayFadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes panelSlideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
-
-.card {
-  padding: 2em;
+.overlay-fade-in {
+  animation: overlayFadeIn 200ms ease-out;
 }
-
-.read-the-docs {
-  color: #888;
+.panel-slide-in {
+  animation: panelSlideInRight 220ms ease-out;
+  will-change: transform, opacity;
 }
