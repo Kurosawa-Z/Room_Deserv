@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { PageContainer } from "../components/pageContainer";
-import { Link } from "react-router-dom";
+import { PageContainer } from "../components/PageContainer";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ export default function Landing() {
             <Button
                 variant="outline"
                 className="px-8 py-6 app-text-foreground"
+                onClick={() => navigate('/signup')}
             >
               Sign up
             </Button>

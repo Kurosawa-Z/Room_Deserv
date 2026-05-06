@@ -1,15 +1,28 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login attempt:", { email, password, rememberMe });
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await login(email, password, rememberMe);
+      navigate("/home");
+    } catch (err: any) {
+      setError(err?.message ?? "Login failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -32,20 +45,24 @@ export default function Login() {
             Log In
           </h2>
 
+          {error ? (
+            <div className="mb-4 text-sm text-red-600">{error}</div>
+          ) : null}
+
           <form onSubmit={handleLogin} className="space-y-4">
-            {/* Email Field */}
+            {/* Username Field */}
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium mb-2 app-text-foreground"
               >
-                Email
+                Username
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 className="w-full px-4 py-2 border app-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your email"
+                placeholder="Enter your username"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -93,9 +110,10 @@ export default function Login() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition mt-6"
+              disabled={isSubmitting}
+              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-medium rounded-md transition mt-6"
             >
-              Enter
+              {isSubmitting ? "Entering..." : "Enter"}
             </button>
           </form>
 
